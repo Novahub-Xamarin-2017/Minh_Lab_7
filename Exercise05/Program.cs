@@ -8,20 +8,15 @@ namespace Exercise05
 {
     class Program
     {
-        
-
         static void Main(string[] args)
         {
-            var list = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }.SubList(4);
+            var numbers = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }.SubList(4).ToList();
 
-            foreach(var i in list)
+            numbers.ForEach(x =>
             {
-                foreach (var j in i)
-                {
-                    Console.WriteLine(j);
-                }
+                x.ForEach(Console.WriteLine);
                 Console.WriteLine();
-            }
+            });
 
             Console.ReadKey();
         }
