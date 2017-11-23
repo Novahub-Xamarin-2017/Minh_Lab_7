@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Class.cs" />
-    <Compile Include="Model\CreateData.cs" />
+    <Compile Include="Model\Datagenerator.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

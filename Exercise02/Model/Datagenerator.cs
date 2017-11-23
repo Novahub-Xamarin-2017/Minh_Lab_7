@@ -12,11 +12,14 @@ namespace Exercise02.Model
         {
             for (int i = 1; i <= 10; i++)
             {
-                yield return new Student {
+                yield return new Student
+                {
                     Id = i,
                     Name = $"{(char)(i + 'a' - 1)}",
-                    Score = i, ClassId = i % 3 + 1,
-                    Birthday = new DateTime(1109 + i, 11, 1) };
+                    Score = i,
+                    ClassId = i % 3 + 1,
+                    Birthday = new DateTime(1109 + i, 11, 1)
+                };
             }
         }
 
@@ -24,9 +27,12 @@ namespace Exercise02.Model
         {
             for (int i = 1; i <= 3; i++)
             {
-                yield return new Class {
+                yield return new Class
+                {
                     Id = i,
-                    Name = $"Class{i}" };
+                    Name = $"Class{i}"
+                };
             }
         }
+    }
 }

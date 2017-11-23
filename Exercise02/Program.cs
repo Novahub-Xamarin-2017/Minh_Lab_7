@@ -21,23 +21,25 @@ namespace Exercise02
             classes.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var studentsOrderBy = students.OrderBy(x=>x.ClassId)
+            var studentsOrderByIdAndName = students.OrderBy(x=>x.ClassId)
                 .ThenBy(x=>x.Name)
                 .ToList();
-            studentsOrderBy.ForEach(Console.WriteLine);
+
+            studentsOrderByIdAndName.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listHasStudentCount = classes.GroupJoin(
-                                students,
-                                x => x.Id,
-                                y => y.ClassId,
-                                (x, group) => new
-                                {
-                                    NumberOfStudents = group.Count(),
-                                    Id = x.Id,
-                                    Name = x.Name
-                                }).ToList();
-            listHasStudentCount.ForEach(Console.WriteLine);
+            var listHasStudentCount = from c in classes
+                                      join s in students
+                                      on c.Id equals s.ClassId
+                                      into g
+                                      select new
+                                      {
+                                          Id = c.Id,
+                                          Name = c.Name,
+                                          Studentcount = g.Count()
+                                      };
+
+            listHasStudentCount.ToList().ForEach(Console.WriteLine);
             Console.WriteLine();
 
             var listHasHighestScore = classes.GroupJoin(
@@ -50,6 +52,7 @@ namespace Exercise02
                                     Id = x.Id,
                                     Name = x.Name
                                 }).ToList();
+
             listHasHighestScore.ForEach(Console.WriteLine);
             Console.WriteLine();
 
@@ -63,10 +66,15 @@ namespace Exercise02
                                     Id = x.Id,
                                     Name = x.Name
                                 }).ToList();
+
             listHasAverageScore.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOfTop5Student = students.OrderByDescending(x=>x.Score).Take(5).ToList();
+            var listOfTop5Student = students
+                .OrderByDescending(x=>x.Score)
+                .Take(5)
+                .ToList();
+
             listOfTop5Student.ForEach(Console.WriteLine);
             Console.WriteLine();
 
@@ -75,10 +83,15 @@ namespace Exercise02
                 .OrderByDescending(x => x.Score)
                 .Take(3)
                 .ToList();
+
             listOfTop5StudentHasSroceGreater6.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOf5StudentRandomSelect = students.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
+            var listOf5StudentRandomSelect = students
+                .OrderBy(x => Guid.NewGuid())
+                .Take(5)
+                .ToList();
+
             listOf5StudentRandomSelect.ForEach(Console.WriteLine);
             Console.WriteLine();
 
