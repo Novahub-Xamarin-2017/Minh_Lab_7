@@ -11,22 +11,20 @@ namespace Exercise03
     {
         static void Main(string[] args)
         {
-            var data = new CreateData();
-
-            var listAuthors = data.GetAuthors();
-            listAuthors.ForEach(Console.WriteLine);
+            var authors = DataGenerator.CreateAuthors().ToList();
+            authors.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listCatalogs = data.GetCatalogs();
-            listCatalogs.ForEach(Console.WriteLine);
+            var catalogs = DataGenerator.CreateCatalogs().ToList();
+            catalogs.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listBooks = data.GetBooks();
-            listBooks.ForEach(Console.WriteLine);
+            var books = DataGenerator.CreateBooks().ToList();
+            books.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOfBook = listBooks.Join(
-                listCatalogs,
+            var listOfBook = books.Join(
+                catalogs,
                 x => x.CatalogId,
                 y => y.Id,
                 (x, y) => new
@@ -37,7 +35,7 @@ namespace Exercise03
                     AuthorId = x.AuthorId,
                     Rate = x.Rate
                 }).Join(
-                    listAuthors,
+                    authors,
                     x=>x.AuthorId,
                     y=>y.Id,
                     (x,y) => new
@@ -51,8 +49,8 @@ namespace Exercise03
             listOfBook.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOfCatalog = listCatalogs.GroupJoin(
-                listBooks,
+            var listOfCatalog = catalogs.GroupJoin(
+                books,
                 x => x.Id,
                 y => y.CatalogId,
                 (x, group) => new
@@ -61,27 +59,27 @@ namespace Exercise03
                     Name = x.Name,
                     BookExample = group
                 }).ToList();
-            foreach (var i in listOfCatalog)
+
+            listOfCatalog.ForEach(x => 
             {
-                Console.Write($"{i.Id} | {i.Name} | ");
-                if (i.BookExample.Any())
+                Console.Write($"{x.Id} | {x.Name} | ");
+                if (x.BookExample.Any())
                 {
-                    Console.Write($"{i.BookExample.Average(m => m.Rate)} | ");
-                    foreach (var j in i.BookExample)
+                    Console.Write($"{x.BookExample.Average(m => m.Rate)} | ");
+                    x.BookExample.ToList().ForEach(y =>
                     {
-                        Console.Write($"Book{j.Id} ");
-                    }
-                    Console.WriteLine($"| {i.BookExample.Count()}");
-                }
-                else
+                        Console.Write($"Book{y.Id} ");
+                    });
+                    Console.WriteLine($"| {x.BookExample.Count()}");
+                } else
                 {
                     Console.WriteLine($"0.0 | null | 0");
                 }
-            }
+            });
             Console.WriteLine();
 
-            var listOfAuthor = listAuthors.GroupJoin(
-                listBooks,
+            var listOfAuthor = authors.GroupJoin(
+                books,
                 x => x.Id,
                 y => y.AuthorId,
                 (x, group) => new
@@ -91,22 +89,23 @@ namespace Exercise03
                     CatalogExample = group
                 }).ToList();
 
-            foreach(var i in listOfAuthor)
+            listOfAuthor.ForEach(x =>
             {
-                Console.Write($"{i.Id} | {i.Name} | ");
-                if (i.CatalogExample.Any())
+                Console.Write($"{x.Id} | {x.Name} | ");
+                if (x.CatalogExample.Any())
                 {
-                    Console.Write($"{i.CatalogExample.Average(m=>m.Rate)} | ");
-                    foreach (var j in i.CatalogExample)
+                    Console.Write($"{x.CatalogExample.Average(m => m.Rate)} | ");
+                    x.CatalogExample.ToList().ForEach(y =>
                     {
-                        Console.Write($"{listCatalogs.Find(m => m.Id == j.CatalogId).Name} ");
-                    }
-                    Console.WriteLine($"| {i.CatalogExample.Count()}");
-                } else
+                        Console.Write($"{catalogs.Find(m => m.Id == y.CatalogId).Name} ");
+                    });
+                    Console.WriteLine($"| {x.CatalogExample.Count()}");
+                }
+                else
                 {
                     Console.WriteLine($"0.0 | null | 0");
                 }
-            }
+            });
             Console.WriteLine();
 
             var searchString = Console.ReadLine();

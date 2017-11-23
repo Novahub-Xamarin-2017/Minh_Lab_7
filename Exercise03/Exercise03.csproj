@@ -46,7 +46,7 @@
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Author.cs" />
     <Compile Include="Model\Catalog.cs" />
-    <Compile Include="Model\CreateData.cs" />
+    <Compile Include="Model\DataGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
