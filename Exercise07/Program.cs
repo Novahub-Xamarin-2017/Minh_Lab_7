@@ -10,16 +10,28 @@ namespace Exercise07
     {
         static void Main(string[] args)
         {
-            var n = (Console.ReadLine().Any()) ? int.Parse(Console.ReadLine()) : 5;
-            var m = (Console.ReadLine().Any()) ? int.Parse(Console.ReadLine()) : 20;
+            var nString = Console.ReadLine();
+            var n = 0;
+            int.TryParse(nString, out n);
+
+            var mString = Console.ReadLine();
+            var m = 0;
+            int.TryParse(nString, out m);
+
+            if (n==0)
+            {
+                n= 5;
+            }
+
+            if (m == 0)
+            {
+                m= 20;
+            }
 
             var ints = Enumerable.Range(1, m-1);
-            var list = ints.OrderBy(x => Guid.NewGuid()).Take(n);
+            var numbers = ints.OrderBy(x => Guid.NewGuid()).Take(n).ToList();
 
-            foreach (var i in list)
-            {
-                Console.WriteLine(i);
-            }
+            numbers.ForEach(Console.WriteLine);
 
             Console.ReadKey();
         }
