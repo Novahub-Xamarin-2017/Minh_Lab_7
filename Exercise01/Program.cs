@@ -11,7 +11,7 @@ namespace Exercise01
     {
         static void Main(string[] args)
         {
-            var list = (new StudentGenerator()).CreateStudents();
+            var list = StudentGenerator.CreateStudents().ToList();
             list.ForEach(Console.WriteLine);
             Console.WriteLine();
 
