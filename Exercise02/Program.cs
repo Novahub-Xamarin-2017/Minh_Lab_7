@@ -13,22 +13,22 @@ namespace Exercise02
     {
         static void Main(string[] args)
         {
-            var data = new CreateData();
-
-            var listOfStudent = data.GetStudents();
-            listOfStudent.ForEach(Console.WriteLine);
+            var students = DataGenerator.CreateStudents().ToList();
+            students.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOfClass = data.GetClasses();
-            listOfClass.ForEach(Console.WriteLine);
+            var classes = DataGenerator.CreateClasses().ToList();
+            classes.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var list = listOfStudent.OrderBy(x=>x.ClassId).ThenBy(x=>x.Name).ToList();
-            list.ForEach(Console.WriteLine);
+            var studentsOrderBy = students.OrderBy(x=>x.ClassId)
+                .ThenBy(x=>x.Name)
+                .ToList();
+            studentsOrderBy.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listHasStudentCount = listOfClass.GroupJoin(
-                                listOfStudent,
+            var listHasStudentCount = classes.GroupJoin(
+                                students,
                                 x => x.Id,
                                 y => y.ClassId,
                                 (x, group) => new
@@ -40,8 +40,8 @@ namespace Exercise02
             listHasStudentCount.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listHasHighestScore = listOfClass.GroupJoin(
-                                listOfStudent,
+            var listHasHighestScore = classes.GroupJoin(
+                                students,
                                 x => x.Id,
                                 y => y.ClassId,
                                 (x, group) => new
@@ -53,8 +53,8 @@ namespace Exercise02
             listHasHighestScore.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listHasAverageScore = listOfClass.GroupJoin(
-                                listOfStudent,
+            var listHasAverageScore = classes.GroupJoin(
+                                students,
                                 x => x.Id,
                                 y => y.ClassId,
                                 (x, group) => new
@@ -66,15 +66,19 @@ namespace Exercise02
             listHasAverageScore.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOfTop5Student = listOfStudent.OrderByDescending(x=>x.Score).Take(5).ToList();
+            var listOfTop5Student = students.OrderByDescending(x=>x.Score).Take(5).ToList();
             listOfTop5Student.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOfTop5StudentHasSroceGreater6 = listOfStudent.Where(x => x.Score >= 6).OrderByDescending(x => x.Score).Take(3).ToList();
+            var listOfTop5StudentHasSroceGreater6 = students
+                .Where(x => x.Score >= 6)
+                .OrderByDescending(x => x.Score)
+                .Take(3)
+                .ToList();
             listOfTop5StudentHasSroceGreater6.ForEach(Console.WriteLine);
             Console.WriteLine();
 
-            var listOf5StudentRandomSelect = listOfStudent.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
+            var listOf5StudentRandomSelect = students.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
             listOf5StudentRandomSelect.ForEach(Console.WriteLine);
             Console.WriteLine();
 
