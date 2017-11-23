@@ -9,17 +9,14 @@ namespace Exercise04
 {
     class Program
     {
-        public static IEnumerable<string> GetAllFiles(string path, Func<string, bool> endWith)
+        public static IEnumerable<string> GetAllFiles(string path, Func<string, bool> filter)
         {
             var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
-
-            var list = new List<string>();
-
-            foreach (var i in files)
+            foreach (var file in files)
             {
-                if (endWith(i))
+                if (filter(file))
                 {
-                    yield return i;
+                    yield return file;
                 }
             }
         }
@@ -28,10 +25,10 @@ namespace Exercise04
         {
             var pathFolder = @"C:\Users\huynh\OneDrive";
 
-            foreach(var i in GetAllFiles(pathFolder, x => x.EndsWith(".txt")))
-            {
-                Console.WriteLine(i);
-            }
+            GetAllFiles(pathFolder, x =>
+                x.EndsWith(".txt"))
+                .ToList()
+                .ForEach(Console.WriteLine);
 
             Console.ReadKey();
         }
