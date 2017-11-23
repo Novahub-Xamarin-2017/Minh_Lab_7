@@ -12,15 +12,12 @@ namespace Exercise06
         {
             var n = 100;
 
-            var ints = Enumerable.Range(2, n);
-            var list = ints.TakeWhile(x => x < n)
-                .Where(x => !ints.TakeWhile(y => y <= (int)Math.Sqrt(x))
-                .Any(y => x % y == 0));
+            var numbers = Enumerable.Range(2, n);
+            var primeNumbers = numbers.TakeWhile(x => x < n)
+                .Where(x => !numbers.TakeWhile(y => y <= (int)Math.Sqrt(x))
+                .Any(y => x % y == 0)).ToList();
 
-            foreach(var i in list)
-            {
-                Console.WriteLine(i);
-            }
+            primeNumbers.ForEach(Console.WriteLine);
 
             Console.ReadKey();
         }
