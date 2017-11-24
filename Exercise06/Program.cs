@@ -15,7 +15,7 @@ namespace Exercise06
             var numbers = Enumerable.Range(2, n - 1);
 
             var primeNumbers = numbers
-                .Where(x => !Enumerable.Range(2, (x - 1) / 2).Any(y => x % y == 0))
+                .Where(x => Enumerable.Range(2, (x - 1) / 2).All(y => x % y != 0))
                 .ToList();
 
             primeNumbers.ForEach(Console.WriteLine);
