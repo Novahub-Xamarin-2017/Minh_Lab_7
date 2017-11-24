@@ -10,23 +10,8 @@ namespace Exercise07
     {
         static void Main(string[] args)
         {
-            var nString = Console.ReadLine();
-            var n = 0;
-            int.TryParse(nString, out n);
-
-            var mString = Console.ReadLine();
-            var m = 0;
-            int.TryParse(nString, out m);
-
-            if (n==0)
-            {
-                n= 5;
-            }
-
-            if (m == 0)
-            {
-                m= 20;
-            }
+            var n = InputNumber(Console.ReadLine(),5);
+            var m = InputNumber(Console.ReadLine(), 20);
 
             var ints = Enumerable.Range(1, m-1);
             var numbers = ints.OrderBy(x => Guid.NewGuid()).Take(n).ToList();
@@ -34,6 +19,13 @@ namespace Exercise07
             numbers.ForEach(Console.WriteLine);
 
             Console.ReadKey();
+        }
+
+        static int InputNumber(string str, int defaultNumber)
+        {
+            var number = 0;
+            int.TryParse(str, out number);
+            return (number == 0) ? defaultNumber : number;
         }
     }
 }
