@@ -10,19 +10,20 @@ namespace Exercise05
     {
         public static IEnumerable<List<T>> SubList<T>(this IList<T> list, int max)
         {
-            var count = 0;
-            var newList = new List<T>();
-
-            foreach (var i in list)
+            for (int i = 0; i <= (list.Count - 1) / max; i++)
             {
-                newList.Add(i);
-                count++;
-                if (count == max || i.Equals(list.Last())) 
+                var newList = new List<T>();
+
+                for (int j = 1; j <= max; j++)
                 {
-                    yield return newList;
-                    count = 0;
-                    newList.Clear();
+                    if (max * i + j - 1 > list.Count - 1)
+                    {
+                        break;
+                    }
+                    newList.Add(list[max * i + j - 1]);
                 }
+
+                yield return newList;
             }
         }
     }
