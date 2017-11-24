@@ -10,49 +10,11 @@ namespace Exercise08
     {
         static void Main(string[] args)
         {
-            var nString = Console.ReadLine();
-            var n = 0;
-            int.TryParse(nString, out n);
-
-            var numbers1 = new List<int>();
-
-            if (n != 0)
-            {
-                for (int i = 1; i <= n; i++)
-                {
-                    var tempString = Console.ReadLine();
-                    var temp = 0;
-                    int.TryParse(tempString, out temp);
-                    numbers1.Add(temp);
-                }
-            } else
-            {
-                numbers1 = new[] { 1, 2, 3, 4, 5, 6 }.ToList();
-            }
-
-            var mString = Console.ReadLine();
-            var m = 0;
-            int.TryParse(nString, out m);
-
-            var listSecond = new List<int>();
-
-            if (m != 0)
-            {
-                for (int i = 1; i <= m; i++)
-                {
-                    var tempString = Console.ReadLine();
-                    var temp = 0;
-                    int.TryParse(tempString, out temp);
-                    listSecond.Add(temp);
-                }
-            }
-            else
-            {
-                listSecond = new[] { 4, 5, 6, 7, 8, 9 }.ToList();
-            }
+            var numbers1 = inputNumbers(new[] { 1, 2, 3, 4, 5, 6 }).ToList();
+            var numbers2 = inputNumbers(new[] { 4, 5, 6, 7, 8, 9 }).ToList();
 
             var listCommon = numbers1.Join(
-                listSecond,
+                numbers2,
                 x => x,
                 y => y,
                 (x, y) => new
@@ -65,7 +27,7 @@ namespace Exercise08
             Console.WriteLine();
 
             var listOfNumberOnlyExistListFirst = numbers1
-                .Where(x => !listSecond
+                .Where(x => !numbers2
                     .Any(y => y == x))
                 .ToList();
 
@@ -73,7 +35,7 @@ namespace Exercise08
             Console.WriteLine();
 
             var listOfNumberExistOnlyList = numbers1
-                .Union(listSecond)
+                .Union(numbers2)
                 .Where(x => !listCommon
                     .Any(y => y.x == x))
                 .ToList();
@@ -88,7 +50,7 @@ namespace Exercise08
                     i = i
                 })
                 .TakeWhile(x => true)
-                .Sum(x => listSecond
+                .Sum(x => numbers2
                 .Select((y, j) => new
                     {
                         y = y,
@@ -100,6 +62,35 @@ namespace Exercise08
             Console.WriteLine(sum);
 
             Console.ReadKey();
+        }
+
+        static IEnumerable<int> inputNumbers(IList<int> defaultNumbers)
+        {
+            var n = InputNumber(Console.ReadLine(), 0);
+
+            if (n != 0)
+            {
+                for (int i = 1; i <= n; i++)
+                {
+                    var temp = InputNumber(Console.ReadLine(), 0);
+                    yield return temp;
+                }
+            }
+            else
+            {
+                foreach (var defaultNumber in defaultNumbers)
+                {
+                    yield return defaultNumber;
+                }
+            }
+            
+        }
+
+        static int InputNumber(string str, int defaultNumber)
+        {
+            var number = 0;
+            int.TryParse(str, out number);
+            return (number == 0) ? defaultNumber : number;
         }
     }
 }
