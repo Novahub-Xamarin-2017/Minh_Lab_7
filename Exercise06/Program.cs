@@ -12,10 +12,11 @@ namespace Exercise06
         {
             var n = 100;
 
-            var numbers = Enumerable.Range(2, n);
-            var primeNumbers = numbers.TakeWhile(x => x < n)
-                .Where(x => !numbers.TakeWhile(y => y <= (int)Math.Sqrt(x))
-                .Any(y => x % y == 0)).ToList();
+            var numbers = Enumerable.Range(2, n - 1);
+
+            var primeNumbers = numbers
+                .Where(x => !Enumerable.Range(2, (x - 1) / 2).Any(y => x % y == 0))
+                .ToList();
 
             primeNumbers.ForEach(Console.WriteLine);
 
